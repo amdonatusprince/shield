@@ -1,6 +1,18 @@
-# Shield Analytics: Solana Transaction Analytics Toolkit 🛡️
+# Shield Tooling: Solana Transaction Analytics Toolkit 🛡️
 
-Shield is a powerful transaction analytics toolkit for Solana that provides real-time monitoring, filtering, and analysis of on-chain activities across different Defi protocols. It enables developers to track transaction volumes, wallet activities, token transfers, and protocol fees through a simple, unified interface.
+Shield is a simple transaction analytics toolkit for Solana that provides real-time monitoring, filtering, and analysis of on-chain activities across different Defi protocols. It leverages Quicknode's stream and functions to deliver streamlined data solutions to developers to track transaction volumes, wallet activities, token transfers, and protocol fees through a simple, unified interface.
+
+Imagine trying to monitor thousands of DeFi transactions every second — tracking user positions, identifying whale movements, or catching arbitrage opportunities.
+
+It’s like trying to spot individual raindrops in a thunderstorm. That’s the challenge developers face when building DeFi applications on Solana. Every trade, every liquidation, and every position change needs to be caught, processed, and acted upon instantly.
+
+Shield changes this game entirely. Instead of drowning in complex transaction logs or missing critical market moments, developers can now tap into a real-time stream of clean, structured data that’s ready for analysis.
+
+Whether you’re building a trading bot, training an AI model, or monitoring risk positions, Shield transforms raw Solana transaction chaos into actionable intelligence.
+
+## Useful Resources
+Demo Video: 
+Article: https://donatusprince.medium.com/building-shield-leveraging-quicknode-streams-function-for-real-time-defi-transaction-monitoring-5bedc10909c3
 
 ## 🌟 Key Features
 
