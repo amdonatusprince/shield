@@ -11,7 +11,8 @@ Shield changes this game entirely. Instead of drowning in complex transaction lo
 Whether you’re building a trading bot, training an AI model, or monitoring risk positions, Shield transforms raw Solana transaction chaos into actionable intelligence.
 
 ## Useful Resources
-Demo Video: 
+Demo Video: https://www.loom.com/share/e09b06ecd2db4193bdc7084142986781?sid=99826a22-5b57-444d-9eab-c9f29548f8a4
+
 Article: https://donatusprince.medium.com/building-shield-leveraging-quicknode-streams-function-for-real-time-defi-transaction-monitoring-5bedc10909c3
 
 ## 🌟 Key Features
