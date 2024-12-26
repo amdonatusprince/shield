@@ -1,6 +1,6 @@
-# Shield Tooling: Solana Transaction Analytics Toolkit 🛡️
+# Shield API
 
-Shield is a simple transaction analytics toolkit for Solana that provides real-time monitoring, filtering, and analysis of on-chain activities across different Defi protocols. It leverages Quicknode's stream and functions to deliver streamlined data solutions to developers to track transaction volumes, wallet activities, token transfers, and protocol fees through a simple, unified interface.
+A simple demostration of creating Solana's DeFi data analytics api toolkit with only QuickNode products (stream & functions) and 0 additional infrastructure.
 
 Imagine trying to monitor thousands of DeFi transactions every second — tracking user positions, identifying whale movements, or catching arbitrage opportunities.
 
@@ -15,201 +15,201 @@ Demo Video: https://www.loom.com/share/e09b06ecd2db4193bdc7084142986781?sid=9982
 
 Article: https://donatusprince.medium.com/building-shield-leveraging-quicknode-streams-function-for-real-time-defi-transaction-monitoring-5bedc10909c3
 
-## 🌟 Key Features
+**Tools Used**
 
-- Real-time transaction monitoring and filtering
-- Protocol-specific analytics and volume tracking
-- Wallet activity analysis and token transfer statistics
-- Fee analysis and large transaction alerts
-- Multi-protocol comparison and daily statistics
-- AI-ready data structure for DeFi transaction analysis
+- QuickNode Streams - | [docs](https://www.quicknode.com/docs/streams/getting-started?utm_source=qn-github&utm_campaign=metrics-api)
+- QuickNode Functions -  [docs](https://www.quicknode.com/docs/functions/getting-started?utm_source=qn-github&utm_campaign=metrics-api)
+- QuickNode Key-Value Store - [docs](https://www.quicknode.com/docs/key-value-store/getting-started?utm_source=qn-github&utm_campaign=metrics-api)
 
-## 🚀 Getting Started
+## Project Details
 
-### Installation
+### Goals
+
+- provide a comprehensive DeFianalytics API
+- require 0 infrastructure outside of QuickNode tools `minimizes costs`
+- supports only Solana for now
+- minimize the number of KV Store reads when possible `minimizes costs` `improves efficiency`
+- minimize function evocations when possible `minimizes costs`
+
+### Design
+
+- QN Stream pipes data from blockchain
+- Stream filter code processes and stores analytics data within QN KV Store
+- Stream filter returns null, sending no data to a destination `minimizes costs`
+- Stream filter logic & data structure in KV store are designed to enable parallel streams to be running `improves efficiency` `improves maintainability`
+- QN Functions, one per method, read the data from KV Store and return convenient data structures
+- Functions can be invoked via API
+
+<details>
+  <summary>Data Structure Within KV Store</summary>
+</details>
+
+## API Methods
+
+### getAllTransactions
+
+Get all Solana DeFi's transactions from the quicknode stream
+
+**Parameters**
+| Name | Type | Required | Default | Description |
+|------|------|----------|---------|-------------|
+| stream | Object | yes | - | Transaction stream object containing transaction data |
+| stream.data | Array | yes | - | Raw transaction data contained within the stream |
+| limit | number | no | null | Maximum number of transactions to return |
+
+<details>
+<summary>Sample Request</summary>
 
 ```bash
-git clone https://github.com/yourusername/shield-analytics.git
-cd shield-analytics
-npm install
-```
-
-### UI Interface
-To access the Shield Analytics dashboard:
-```bash
-cd shield_ui
-npm install
-npm run dev
-```
-The dashboard will be available at `http://localhost:3000`
-
-## 📊 API Usage
-
-### Base URL
-```
-https://api.quicknode.com/functions/rest/v1/functions/ea3c5ff3-81b0-4535-9397-b1cafff84751/call
-```
-
-### Authentication
-Include your API key in the headers:
-```javascript
-headers: {
-  'Content-Type': 'application/json',
-  'x-api-key': 'YOUR_API_KEY'
-}
-```
-
-### Sample API Calls
-
-1. **Get All Transactions**
-```javascript
-const data = {
-  options: {
-    type: 'all',
-    limit: 10
-  }
-}
-```
-
-2. **Protocol-Specific Analysis**
-```javascript
-const data = {
-  options: {
-    type: 'byProtocol',
-    protocol: 'JUPITER',
-    limit: 10
-  }
-}
-```
-
-3. **Volume Statistics**
-```javascript
-const data = {
-  options: {
-    type: 'volume',
-    protocol: 'JUPITER',
-    timeframe: 3600 // Last hour
-  }
-}
-```
-
-4. **Wallet Analysis**
-```javascript
-const data = {
-  options: {
-    type: 'walletSearch',
-    walletAddress: 'YOUR_WALLET_ADDRESS'
-  }
-}
-```
-
-### Complete API Example
-```javascript
-const axios = require('axios');
-
-const url = 'https://api.quicknode.com/functions/rest/v1/functions/YOUR_QUICKNODE_FUNCTION_ID/call';
-
-const headers = {
-  'Content-Type': 'application/json',
-  'x-api-key': 'YOUR_API_KEY'
-};
-
-const data = {
-  options: {
-    type: 'multiProtocolStats'
-  }
-};
-
-axios.post(url, data, { headers })
-  .then(response => console.log(response.data))
-  .catch(error => console.error('Error:', error));
-```
-
-## 🔍 Use Cases
-
-### 1. DeFi Protocol Analytics
-- Track protocol usage and volume
-- Monitor fee generation
-- Analyze user behavior patterns
-- Compare protocol performance
-
-### 2. Wallet Tracking
-- Monitor specific wallet activities
-- Track large transactions
-- Analyze token transfer patterns
-- Identify active traders
-
-### 3. Token Analysis
-- Track token transfer volumes
-- Monitor token holder activity
-- Analyze token distribution
-- Track mint activities
-
-### 4. Risk Management
-- Monitor large transactions
-- Track unusual activity patterns
-- Analyze protocol health
-- Monitor fee structures
-
-### 5. AI/ML Integration
-Shield's structured data format makes it perfect for training AI models:
-- Transaction pattern recognition
-- Anomaly detection
-- Price prediction
-- User behavior analysis
-- Protocol performance optimization
-
-## 📋 Available Query Types
-
-| Type | Description | Required Parameters |
-|------|-------------|-------------------|
-| `all` | Get all transactions | `limit` (optional) |
-| `byProtocol` | Protocol-specific transactions | `protocol`, `limit` (optional) |
-| `volume` | Protocol volume statistics | `protocol`, `timeframe` |
-| `activeWallets` | Active wallet list | `protocol` |
-| `transferStats` | Token transfer statistics | `protocol` |
-| `alertLarge` | Large transaction monitoring | `threshold`, `callback` |
-| `multiProtocolStats` | Cross-protocol comparison | none |
-| `dailyStats` | Daily protocol statistics | `protocol` |
-| `walletSearch` | Wallet transaction analysis | `walletAddress` |
-| `protocolFees` | Protocol fee analysis | `protocol` (optional) |
-| `valueTransferred` | Token transfer analysis | `mintAddress` |
-
-## 🤖 AI Integration
-
-Shield's data structure is specifically designed to be AI-friendly, making it perfect for:
-- Training DeFi trading bots
-- Building predictive models
-- Developing risk assessment systems
-- Creating automated monitoring systems
-- Optimizing protocol parameters
-
-Example AI use case:
-```javascript
-// Fetch training data
-const trainingData = await fetch(url, {
-  method: 'POST',
-  headers,
-  body: JSON.stringify({
-    options: {
-      type: 'multiProtocolStats',
-      timeframe: 86400 * 30 // 30 days of data
+curl -X POST "https://api.quicknode.com/functions/rest/v1/functions/ea3c5ff3-81b0-4535-9397-b1cafff84751/call" \
+  -H "accept: application/json" \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: YOUR_API_KEY" \
+  -d '{
+    "user_data": {
+      "limit": 10
     }
-  })
-});
-
-// Use data for AI training
-const model = await trainModel(trainingData);
+  }'
 ```
 
-## 📝 License
+</details>
 
-MIT
+<details>
+<summary>Sample Response</summary>
 
-## 🤝 Contributing
+```json
+{
+    "accountChanges": [
+      {
+        "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+        "balanceChange": 0
+      },
+      {
+        "address": "7e4saqFjTrVNFgxh4u6EQJHYQzKeV3Wp9T2JDnXzRNYm",
+        "balanceChange": 0
+      },
+      {
+        "address": "5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1",
+        "balanceChange": 0
+      },
+      {
+        "address": "AQjfCJru4sghQBCicErMds15m4dmkg3jVC4tk7c5qxkA",
+        "balanceChange": 0
+      },
+      {
+        "address": "6CEKRLzqjJaEHvirtGyfrRDqYHYWeJ933VxwrcVi1pbG",
+        "balanceChange": 0
+      },
+      {
+        "address": "7KyxcCFZqDnxcaBCYNVQf7gbkW34Gpb4H9YiPn4iKf4J",
+        "balanceChange": -1306928053
+      },
+      {
+        "address": "j4N8pcorhRX8KwP6zyjgnBmzMyUwFjyifrmX3n3Umpg",
+        "balanceChange": 0
+      },
+      {
+        "address": "srmqPvymJeFKQ4zGQed1GFppgkRHL9kaELCbyksJtPX",
+        "balanceChange": 0
+      },
+      {
+        "address": "Ebc56sgSD7rh27rHYZAMgdGojT2JWtTK3ng2Rt6Qhxdv",
+        "balanceChange": 0
+      },
+      {
+        "address": "6JQAZ6ZZpWdLC7pJRAgx2dN26vE4JjryvhwBf34FifsY",
+        "balanceChange": 0
+      },
+      {
+        "address": "4GXFb44GLqZx5yntYE19dq4vWsQCssKr8UPwe19WyQsE",
+        "balanceChange": 0
+      },
+      {
+        "address": "J16RMUWyeg6xtWuKFb8iEPsxVXHC4f1WiCQLtucpKqse",
+        "balanceChange": 0
+      },
+      {
+        "address": "B1h74rQHhFRyanohfgtmADGJ571EApHGh8PjdArHC23C",
+        "balanceChange": 0
+      },
+      {
+        "address": "28iTwrXTmLXGGXhFT2S2moA3CBHhG1GiLDEWgYuVDKfb",
+        "balanceChange": 0
+      },
+      {
+        "address": "DRpaYeN2U9LF9DeCt4joZfJwKNt7epptwekCC2QLEUCd",
+        "balanceChange": 0
+      },
+      {
+        "address": "2u1SZw4sLSSiFQcy4AQH9a1rdJ6HP133ZE96cfQ3FWBE",
+        "balanceChange": -2039280
+      },
+      {
+        "address": "BvDsmrzaDdtqJtr2pe4BADU2eViqJYz7G7QPNzitu75d",
+        "balanceChange": 0
+      },
+      {
+        "address": "HdJ25fEauUh4GFjoxdVjQwMKdfRRrP9nyb1f6xj3qigD",
+        "balanceChange": 1300964073
+      }
+    ],
+    "blockSlot": 308943544,
+    "instruction": {
+      "data": "6SAF3BYcF4JQmG1GbDbMLt7",
+      "index": 4
+    },
+    "lastUpdated": "2024-12-22T07:00:33.997Z",
+    "logs": [
+      "Program log: Instruction: InitializeAccount",
+      "Program log: Instruction: Transfer",
+      "Program log: Instruction: Transfer",
+      "Program log: Instruction: CloseAccount",
+      "Program log: Instruction: CloseAccount"
+    ],
+    "processedAt": "2024-12-22T07:00:33.997Z",
+    "program": "675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8",
+    "protocol": "RAYDIUM",
+    "subType": "OPEN_BOOK",
+    "success": false,
+    "timestamp": 1734810724,
+    "tokenTransfers": [
+      {
+        "amount": 326.122211348,
+        "decimals": 9,
+        "mint": "So11111111111111111111111111111111111111112",
+        "owner": "5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1",
+        "rawAmount": "326122211348"
+      },
+      {
+        "amount": 69596155.55726,
+        "decimals": 6,
+        "mint": "97chgb7EwbGoMtDT2aWZ9MVsujGvxbgaGKZFMbg6pump",
+        "owner": "5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1",
+        "rawAmount": "69596155557260"
+      },
+      {
+        "amount": 0,
+        "decimals": 9,
+        "mint": "So11111111111111111111111111111111111111112",
+        "owner": "DRpaYeN2U9LF9DeCt4joZfJwKNt7epptwekCC2QLEUCd",
+        "rawAmount": "0"
+      },
+      {
+        "amount": 0,
+        "decimals": 6,
+        "mint": "97chgb7EwbGoMtDT2aWZ9MVsujGvxbgaGKZFMbg6pump",
+        "owner": "DRpaYeN2U9LF9DeCt4joZfJwKNt7epptwekCC2QLEUCd",
+        "rawAmount": "0"
+      }
+    ],
+    "transactionId": "2VoHoxTax2HcTfgWruFkDxGHKV5cGyKoGmHXr3XHP4WaGxLRjMJfiv64e2nakUStDxac6sKmFeEr5nx7ha2KVQwi",
+    "type": "InitializeAccount",
+    "userBalanceChange": 0,
+    "userWallet": "5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1"
+  },
+```
 
-Contributions, issues, and feature requests are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for more information.
+</details>
 
-## 📮 Support
-
-For support, email support@shield-analytics.com or join our [Discord community](https://discord.gg/shield-analytics).
+<br>
+<br>
