@@ -66,8 +66,9 @@ curl -X POST "https://api.quicknode.com/functions/rest/v1/functions/ea3c5ff3-81b
   -H "Content-Type: application/json" \
   -H "x-api-key: YOUR_API_KEY" \
   -d '{
+    "network": "solana-mainnet",
     "user_data": {
-      "limit": 10
+      "limit": 100
     }
   }'
 ```
