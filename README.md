@@ -54,7 +54,7 @@ Get all Solana DeFi's transactions from the quicknode stream
 | Name | Type | Required | Default | Description |
 |------|------|----------|---------|-------------|
 | stream | Object | yes | - | Transaction stream object containing transaction data |
-| stream.data | Array | yes | - | Raw transaction data contained within the stream |
+| network | String | yes | - |  Blockchain network to return transaction from |
 | limit | number | no | null | Maximum number of transactions to return |
 
 <details>
