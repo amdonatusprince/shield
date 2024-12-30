@@ -1,14 +1,14 @@
 # Shield API
 
-A simple demostration of creating Solana's DeFi data analytics api toolkit with only QuickNode products (stream & functions) and 0 additional infrastructure.
+This is a simple demonstration of creating Solana's DeFi data analytics API toolkit with only QuickNode products (stream and functions) and no additional infrastructure.
 
 Imagine trying to monitor thousands of DeFi transactions every second — tracking user positions, identifying whale movements, or catching arbitrage opportunities.
 
-It’s like trying to spot individual raindrops in a thunderstorm. That’s the challenge developers face when building DeFi applications on Solana. Every trade, every liquidation, and every position change needs to be caught, processed, and acted upon instantly.
+It’s like trying to spot individual raindrops in a thunderstorm. Developers face the same challenge when building DeFi applications on Solana. Every trade, liquidation, and position change needs to be caught, processed and acted upon instantly.
 
-Shield changes this game entirely. Instead of drowning in complex transaction logs or missing critical market moments, developers can now tap into a real-time stream of clean, structured data that’s ready for analysis.
+Shield changes this game entirely. Instead of drowning in complex transaction logs or missing critical market moments, developers can tap into a real-time stream of clean, structured data ready for analysis.
 
-Whether you’re building a trading bot, training an AI model, or monitoring risk positions, Shield transforms raw Solana transaction chaos into actionable intelligence.
+Whether you’re building a trading bot, training predictive models, developing risk assessment systems, creating automated monitoring systems, or monitoring risk positions, Shield transforms raw Solana transaction chaos into actionable intelligence.
 
 ## Useful Resources
 Demo Video: https://www.loom.com/share/e09b06ecd2db4193bdc7084142986781?sid=99826a22-5b57-444d-9eab-c9f29548f8a4
@@ -44,7 +44,23 @@ Article: https://donatusprince.medium.com/building-shield-leveraging-quicknode-s
   <summary>Data Structure Within KV Store</summary>
 </details>
 
-## API Methods
+## 📋 API Methods
+
+| Type | Description | Required Parameters |
+|------|-------------|-------------------|
+| `all` | Get all transactions | `limit` (optional) |
+| `byProtocol` | Protocol-specific transactions | `protocol`, `limit` (optional) |
+| `volume` | Protocol volume statistics | `protocol`, `timeframe` |
+| `activeWallets` | Active wallet list | `protocol` |
+| `transferStats` | Token transfer statistics | `protocol` |
+| `alertLarge` | Large transaction monitoring | `threshold`, `callback` |
+| `multiProtocolStats` | Cross-protocol comparison | none |
+| `dailyStats` | Daily protocol statistics | `protocol` |
+| `walletSearch` | Wallet transaction analysis | `walletAddress` |
+| `protocolFees` | Protocol fee analysis | `protocol` (optional) |
+| `valueTransferred` | Token transfer analysis | `mintAddress` |
+
+## API Functions
 
 ### getAllTransactions
 
