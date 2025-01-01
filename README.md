@@ -83,6 +83,7 @@ curl -X POST "https://api.quicknode.com/functions/rest/v1/functions/ea3c5ff3-81b
   -H "x-api-key: YOUR_API_KEY" \
   -d '{
     "network": "solana-mainnet",
+    "dataset": "shield-stream",
     "user_data": {
       "limit": 100
     }
